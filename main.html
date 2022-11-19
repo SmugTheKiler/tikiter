@@ -48,13 +48,14 @@
       let count = data._embedded.venues.length;
       let number = 1;
       output = data._embedded.venues.forEach(venue => {                                       // https://github.com/lucia-gm/note-app/blob/master/app.js
-          const paragraph = document.body.appendChild(document.createElement('p'));
+          const paragraph = document.body.appendChild(document.createElement('a'));
           paragraph.style.background = '#3278c5';
           paragraph.style.fontSize = '20px';
           paragraph.style.padding = '10px';
           paragraph.style.border = '3px solid #235489';
           paragraph.style.margin = '10px';
-          paragraph.textContent = `[${number++}] ` + venue.name + ` ` + venue.url
+          paragraph.href = venue.url;
+          paragraph.textContent = `[${number++}] ` + venue.name
         });                                                                               //           console.log(JSON.stringify(venue) + ` ----  ${counter}`)
       document.getElementById('search').innerHTML = `Search [${count} Results]`;
     }).catch(err => { // if error
