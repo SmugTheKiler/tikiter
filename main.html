@@ -1,0 +1,70 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Tikiter</title>
+  <meta name="description" content="Tikiter! - Ticket Finder - SF Project - E.G.">
+  <meta name="author" content="Emir G.">
+
+  <meta property="og:title" content="Tikiter">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://github.com/SmugTheKiler">
+  <meta property="og:description" content="Tikiter! - Ticket Finder - SF Project - E.G.">
+  <meta property="og:image" content="./images/image.png">
+
+  <link rel="icon" href="./images/favicon.ico">
+  <link rel="stylesheet" href="./css/main.css">
+
+</head>
+
+<body>
+
+  <h1 class="head">Tikiter!</h1>
+  <p>This is the place to search for tickets near you by city!</p>
+  
+  <div class="centered">
+
+    <form id='form-city' action="/search" method="post"></form>
+
+    <input type="text" name="city" id="city-input" style="border-radius: 5px;" value='Your City' />
+
+    </form>
+
+  </div>
+  
+  <div class="interactedDiv">
+    <button onclick="search()" class="searchButton" id="search">Search</button>
+    <p id="output"></p>
+    <script>
+      function search() {
+      const input = document.getElementById("city-input").value;
+      fetch(`https://app.ticketmaster.com/discovery/v2/venues?apikey=g2OZIw7lpR4NrRjG6qWjRiTQGW3sZbBL&locale=*`).then(response => {                                    // https://developer.ticketmaster.com/api-explorer/v2/
+      return response.json();
+    }).then(data => {
+      let count = data._embedded.venues.length;
+      let number = 1;
+      output = data._embedded.venues.forEach(venue => {                                       // https://github.com/lucia-gm/note-app/blob/master/app.js
+          const paragraph = document.body.appendChild(document.createElement('p'));
+          paragraph.style.background = '#3278c5';
+          paragraph.style.fontSize = '20px';
+          paragraph.style.padding = '10px';
+          paragraph.style.border = '3px solid #235489';
+          paragraph.style.margin = '10px';
+          paragraph.textContent = `[${number++}] ` + venue.name + ` ` + venue.url
+        });                                                                               //           console.log(JSON.stringify(venue) + ` ----  ${counter}`)
+      document.getElementById('search').innerHTML = `Search [${count} Results]`;
+    }).catch(err => { // if error
+      output = 'There was an error'
+      console.log(err)
+    });
+      document.getElementById("output").value = output;
+    };
+    </script>
+  </div>
+  <script type="text/javascript" src="./js/scripts.js"></script>
+</body>
+</html>
