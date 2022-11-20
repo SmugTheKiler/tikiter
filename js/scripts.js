@@ -1,7 +1,7 @@
 function search() {
   const input = document.getElementById("city-input").value;
   fetch(
-    `https://app.ticketmaster.com/discovery/v2/venues?apikey=g2OZIw7lpR4NrRjG6qWjRiTQGW3sZbBL&locale=*`
+    `https://app.ticketmaster.com/discovery/v2/venues?apikey=g2OZIw7lpR4NrRjG6qWjRiTQGW3sZbBL&locale=*&countryCode=AU&city=${input}*`
   )
     .then((response) => {
       // https://developer.ticketmaster.com/api-explorer/v2/
